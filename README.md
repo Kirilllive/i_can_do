@@ -8,12 +8,12 @@ To use it is not necessary to know the languages and programming, it is easy to 
 You can use a business card as a site or directories of links to social networks and other sites
 
 Key Features:
-  No using JQuery
-  Easy to use and upgrades (possibly modify css, html, and javascript)
-  Integrated image viewer
-  Content is stored in json
-  Displays html content from json, you can put an iframe or video from YouTube
-  3 views for presenting content (gallery, list, text)
+- No using JQuery
+- Easy to use and upgrades (possibly modify css, html, and javascript)
+- Integrated image viewer
+- Content is stored in json
+- Displays html content from json, you can put an iframe or video from YouTube
+- 3 views for presenting content (gallery, list, text)
 
 Example
 http://odin-interactive.com/kirill.html
