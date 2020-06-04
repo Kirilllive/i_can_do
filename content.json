@@ -1,0 +1,74 @@
+{
+    "description":"<b>I CAN DO</b> - Simple HTML page for portfolio, personal content or catalog. the content is set using a json file, which is analyzed using javascript and displays the content in several ways (gallery, list, text). There is a built-in image viewer, HTML content and links to external pages. the number of pages and directories is not limited ",
+    "avatar":"icon.jpg",
+    "main_menu": ["gallery","list","text"],
+    "gallery":{
+        "tip": "gallery",
+        "content": [
+            {
+                "name":"",
+                "icon":"icon.jpg",
+                "img":"icon.jpg"
+            },{
+                "name":"",
+                "icon":"icon.jpg",
+                "url":"icon.jpg"
+            },{
+                "title": "TITLE"
+            },{
+                "name":"",
+                "icon":"icon.jpg",
+                "content":"<div style='color:#fff;'>HELLO</div>"
+            },{
+                "name":"",
+                "icon":"icon.jpg"
+            }
+        ]
+    },
+    "list":{
+        "tip": "list",
+        "content": [
+            {
+                "name":"tip url",
+                "icon":"icon.jpg",
+                "text":"Go to a third-party site or resource using the link",
+                "url":"icon.jpg"
+            },{
+                "name":"tip content",
+                "icon":"icon.jpg",
+                "text":"Displays html content from json, you can put an iframe or video from YouTube",
+                "content":"<div style='color:#fff;'>HELLO</div>"
+            },{
+                "title": "TITLE"
+            },{
+                "name":"tip img",
+                "icon":"icon.jpg",
+                "text":"Link to the image that appears at the top of the page",
+                "img":"icon.jpg"
+            },{
+                "name":"tip img",
+                "icon":"icon.jpg",
+                "text":"Empty block for plain text"
+            }
+        ]
+    },
+    "text":{
+    "tip": "text",
+    "content": [
+            {
+                "text":"Go to a third-party site or resource using the link",
+                "url":"icon.jpg"
+            },{
+                "text":"Displays html content from json, you can put an iframe or video from YouTube",
+                "content":"<div style='color:#fff;'>HELLO</div>"
+            },{
+                "title": "TITLE"
+            },{
+                "text":"Link to the image that appears at the top of the page",
+                "img":"icon.jpg"
+            },{
+                "text":"Empty block for plain text"
+            }
+        ]
+    }
+}

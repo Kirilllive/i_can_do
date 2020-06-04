@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KIRILL LIVE</title>
+<style>
+*{
+    font-family: Arial;
+    border-collapse: collapse;
+    border: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-spacing: 0px;
+    color: #888;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+body{padding-bottom: 64px;}
+.shadow {
+    box-shadow: 0px 2px 24px rgba(0,0,0,0.1);
+    border: solid 2px #ccc;
+    transition-duration: 0.4s;
+}
+.shadow_select:hover  {
+    box-shadow: 0px 4px 24px rgba(0,0,0,0.25);
+    transition-duration: 0.4s;
+}
+.panel {
+    background-color:#fff;
+    border-radius: 16px;
+}
+.cursor_link{cursor:pointer;}
+.bord {
+    border-right: solid 2px #ccc;
+}
+.select {color:#ccc;}
+.item_gl {
+    width: 90%;
+    height: 90%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.item_ls {
+    width: 100%;
+    min-height: 164px;
+    margin: 0 0 32px 0;
+}
+.item_tx {
+    width: 100%;
+    margin: 0 0 32px 0;
+    text-align:left;
+    padding: 20px;
+}
+.avatar{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height:128px;
+    width:128px;
+    border-radius: 64px;
+}
+.gallery {
+    float: left;
+    width: 25%;
+    height: 200px;
+  
+}
+@media only screen and (max-width: 680px) {
+    .gallery {
+        width: 33%;
+        height: 200px;
+    }
+}
+@media only screen and (max-width: 560px) {
+    .gallery {
+        width: 50%;
+        height: 200px;
+    }
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#window_zone {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0);
+    position: fixed;
+    left: 0;
+    top: 0;
+    visibility:hidden;
+    transition-duration: 0.5s;
+}
+.content{
+    max-width: 75%;
+    margin: 5% 0% 5% 0%;
+}
+</style>
+</head>
+<body cellspacing="0" cellpadding="0" onload="content('content.json')">
+<div align="center">
+<table style="max-width:800px; min-width:400px; width:calc(100% - 40px);">
+<tbody>
+<tr>
+<td height="256px" width="186px" align="left" valign="center">
+    <div id='avatar' class='shadow avatar' style="background-image: url('');"></div></td>
+<td><div class='shadow panel' id='description' style='min-height:128px; width:100%; margin: 20px 0px 20px 0px; padding: 20px;'></div></td>
+</tr>
+<tr>
+<td colspan='2' align='center' valign='top' height='92'><div id='main_menu' class='shadow panel' style='height:48px; width:100%;'>
+    </div>
+</td>
+</tr>
+<tr>
+<td id='Message' colspan="2" align="center" >
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id='window_zone' onclick="modal_window('close')" style="height: 100vh; width:100%; overflow: scroll;" align='center'></div>
+<script>
+var text_json;
+function content(file) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                text_json = JSON.parse(this.responseText);
+                document.getElementById('avatar').style.backgroundImage = "url('" + text_json.avatar + "')";
+                document.getElementById('description').innerHTML = text_json.description;
+                main_menu();
+                if(window.location.hash){
+                    updata_page(window.location.hash.replace('#',''))
+                } else {
+                    updata_page(text_json.main_menu[0])
+                }
+            }
+        };
+        xmlhttp.open("GET", file, true);
+        xmlhttp.send();
+}
+function main_menu() {
+    var html = "<table width='100%' height='100%'><tbody><tr>",
+        size = 100 / text_json.main_menu.length,
+        style;
+    for (i = 0; i < text_json.main_menu.length; i++) {
+        style = (i != text_json.main_menu.length-1) ? 'bord': '';
+        html = html + "<td id='m_" + text_json.main_menu[i] + "' onclick=\"updata_page('" + text_json.main_menu[i] + "')\" align='center' valign='center' width='" + size + "%' class='cursor_link menu_button " + style + "'>" + text_json.main_menu[i].toUpperCase() + "</td>"
+    }
+    document.getElementById('main_menu').innerHTML = html + "</tr></tbody></table>"
+}
+function updata_page(name) {
+    var buttons = document.getElementsByClassName('menu_button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("select");
+        if (buttons[i].id == "m_"+name) {buttons[i].classList.add("select");}
+    }
+    window.location.hash = name;
+    var html = "";
+    if (text_json[name].tip == "gallery"){
+        for (i = 0; i < text_json[name].content.length; i++) {
+            if (text_json[name].content[i].title){
+                html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
+            } else {
+                html = html + "<div class='gallery'><div " + link(name,i) + " class='" + cursor_link(name,i) + " panel shadow item_gl shadow_select' style=\"background-image: url('" + text_json[name].content[i].icon + "');\" ></div> </div>"
+            }
+        }
+        document.getElementById('Message').innerHTML = html
+    } else  if (text_json[name].tip == "list") {
+        for (i = 0; i < text_json[name].content.length; i++) {
+            if (text_json[name].content[i].title){
+                html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
+            } else {
+            var table = "<div class='" + cursor_link(name,i) + " panel shadow item_ls shadow_select' " + link(name,i) + " ><table width='100%' height='164'><tbody><tr><td width='164' align='center' valign='center' rowspan='2'><img src='" + text_json[name].content[i].icon + "' style='height:128px; width:128px; border-radius: 64px;'></td><td align='left' height='48' valign='center'>" + text_json[name].content[i].name + "</td></tr><tr><td valign='top' align='left'><p>" + text_json[name].content[i].text + "</p></td></tr></tbody></table></div>"
+                html = html + table
+                
+            }
+        }
+        document.getElementById('Message').innerHTML = html
+    } else  if (text_json[name].tip == "text") {
+        for (i = 0; i < text_json[name].content.length; i++) {
+            if (text_json[name].content[i].title){
+                html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
+            } else {
+                html = html + "<div class='" + cursor_link(name,i) + " panel shadow item_tx shadow_select' " + link(name,i) + ">" + text_json[name].content[i].text + "</div>";
+            }
+        }
+        document.getElementById('Message').innerHTML = html
+    }
+}
+function link(name,i){
+    if (text_json[name].content[i].url){
+        return "onclick=\"window.open('" + text_json[name].content[i].url + "')\"";
+    } else if (text_json[name].content[i].img || text_json[name].content[i].content){
+        return "onclick=\"modal_window('open'," + i + ")\"";
+    }
+}
+function cursor_link(name,i) {
+    if (text_json[name].content[i].img || text_json[name].content[i].content || text_json[name].content[i].url){
+        return "cursor_link";}
+}
+function modal_window(action,i){
+    var window_zone = document.getElementById("window_zone");
+    if (action == 'close'){
+        window_zone.style.visibility = "hidden"
+        window_zone.style.backgroundColor = 'rgba(0,0,0,0)';
+        document.body.style.overflow = 'scroll';
+        var child = window_zone.lastElementChild;
+        while (child) {
+            window_zone.removeChild(child);
+            child = window_zone.lastElementChild;
+        }
+    } else if (action == 'open') {
+        var name = window.location.hash.replace('#','');
+        window_zone.style.visibility = "visible";
+        window_zone.scrollTo(0, 0);
+        window_zone.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        document.body.style.overflow = 'hidden';
+        if (text_json[name].content[i].img){
+            var img = document.createElement("img");
+            img.className = "content shadow panel";
+            img.src = text_json[name].content[i].img;
+            window_zone.appendChild(img);
+            if (text_json[name].content[i].name){
+                var div = document.createElement("div");
+                div.innerHTML = text_json[name].content[i].name;
+                div.style.color = "#fff";
+                div.style.margin = "0% 0% 10% 0%";
+                div.style.fontSize = "32px";
+                window_zone.appendChild(div);
+            }
+        } else if (text_json[name].content[i].content){
+            window_zone.innerHTML = "<table style='width: 100vw; height: 100vh;'><tbody><tr><td align='center' valign='center'>" + text_json[name].content[i].content; + "</td></tr></tbody></table>"
+        }
+    }
+}
+</script>
+</body>
+</html>
