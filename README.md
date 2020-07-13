@@ -11,8 +11,8 @@ Key Features:
 - No using JQuery
 - Easy to use and upgrades (possibly modify css, html, and javascript)
 - Integrated image viewer
-- Content is stored in json
-- Displays html content from json, you can put an iframe or video from YouTube
+- Content is stored in an array (let)
+- Displays html content from array, you can put an iframe or video from YouTube
 - 3 views for presenting content (gallery, list, text)
 
 Example
