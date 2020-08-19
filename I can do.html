@@ -124,152 +124,157 @@ body{padding-bottom: 64px;}
 <div id='window_zone' onclick="modal_window('close')" style="height: 100vh; width:100%; overflow: scroll;" align='center'></div>
 <script>
 let text_json = {
-    "description":"<b>I CAN DO</b> - Simple HTML page for portfolio, personal content or catalog. the content is set using a json file, which is analyzed using javascript and displays the content in several ways (gallery, list, text). There is a built-in image viewer, HTML content and links to external pages. the number of pages and directories is not limited ",
-    "avatar":"icon.jpg",
-    "main_menu": ["gallery","list","text"],
-    "gallery":{
+    "description": "<b>I CAN DO</b> - Simple HTML page for portfolio, personal content or catalog. the content is set using a json file, which is analyzed using javascript and displays the content in several ways (gallery, list, text). There is a built-in image viewer, HTML content and links to external pages. the number of pages and directories is not limited ",
+    "avatar": "icon.jpg",
+    "gallery": {
         "tip": "gallery",
-        "content": [
-            {
-                "name":"",
-                "icon":"icon.jpg",
-                "img":"icon.jpg"
-            },{
-                "name":"",
-                "icon":"icon.jpg",
-                "url":"icon.jpg"
-            },{
-                "title": "TITLE"
-            },{
-                "name":"",
-                "icon":"icon.jpg",
-                "content":"<div style='color:#fff;'>HELLO</div>"
-            },{
-                "name":"",
-                "icon":"icon.jpg"
-            }
-        ]
+        "content": [{
+            "name": "",
+            "icon": "icon.jpg",
+            "img": "icon.jpg"
+        }, {
+            "name": "",
+            "icon": "icon.jpg",
+            "url": "icon.jpg"
+        }, {
+            "title": "TITLE"
+        }, {
+            "name": "",
+            "icon": "icon.jpg",
+            "content": "<div style='color:#fff;'>HELLO</div>"
+        }, {
+            "name": "",
+            "icon": "icon.jpg"
+        }]
     },
-    "list":{
+    "list": {
         "tip": "list",
-        "content": [
-            {
-                "name":"tip url",
-                "icon":"icon.jpg",
-                "text":"Go to a third-party site or resource using the link",
-                "url":"icon.jpg"
-            },{
-                "name":"tip content",
-                "icon":"icon.jpg",
-                "text":"Displays html content from json, you can put an iframe or video from YouTube",
-                "content":"<div style='color:#fff;'>HELLO</div>"
-            },{
-                "title": "TITLE"
-            },{
-                "name":"tip img",
-                "icon":"icon.jpg",
-                "text":"Link to the image that appears at the top of the page",
-                "img":"icon.jpg"
-            },{
-                "name":"tip img",
-                "icon":"icon.jpg",
-                "text":"Empty block for plain text"
-            }
-        ]
+        "content": [{
+            "name": "tip url",
+            "icon": "icon.jpg",
+            "text": "Go to a third-party site or resource using the link",
+            "url": "icon.jpg"
+        }, {
+            "name": "tip content",
+            "icon": "icon.jpg",
+            "text": "Displays html content from json, you can put an iframe or video from YouTube",
+            "content": "<div style='color:#fff;'>HELLO</div>"
+        }, {
+            "title": "TITLE"
+        }, {
+            "name": "tip img",
+            "icon": "icon.jpg",
+            "text": "Link to the image that appears at the top of the page",
+            "img": "icon.jpg"
+        }, {
+            "name": "tip img",
+            "icon": "icon.jpg",
+            "text": "Empty block for plain text"
+        }]
     },
-    "text":{
-    "tip": "text",
-    "content": [
-            {
-                "text":"Go to a third-party site or resource using the link",
-                "url":"icon.jpg"
-            },{
-                "text":"Displays html content from json, you can put an iframe or video from YouTube",
-                "content":"<div style='color:#fff;'>HELLO</div>"
-            },{
-                "title": "TITLE"
-            },{
-                "text":"Link to the image that appears at the top of the page",
-                "img":"icon.jpg"
-            },{
-                "text":"Empty block for plain text"
-            }
-        ]
+    "text": {
+        "tip": "text",
+        "content": [{
+            "text": "Go to a third-party site or resource using the link",
+            "url": "icon.jpg"
+        }, {
+            "text": "Displays html content from json, you can put an iframe or video from YouTube",
+            "content": "<div style='color:#fff;'>HELLO</div>"
+        }, {
+            "title": "TITLE"
+        }, {
+            "text": "Link to the image that appears at the top of the page",
+            "img": "icon.jpg"
+        }, {
+            "text": "Empty block for plain text"
+        }]
     }
 };
+
 function content() {
     document.getElementById('avatar').style.backgroundImage = "url('" + text_json.avatar + "')";
     document.getElementById('description').innerHTML = text_json.description;
     main_menu();
-    if(window.location.hash){
-        updata_page(window.location.hash.replace('#',''))
+    if (window.location.hash) {
+        updata_page(window.location.hash.replace('#', ''))
     } else {
-        updata_page(text_json.main_menu[0])
+        updata_page(Object.getOwnPropertyNames(text_json)[0])
     }
 }
+
 function main_menu() {
     var html = "<table width='100%' height='100%'><tbody><tr>",
-        size = 100 / text_json.main_menu.length,
+        size = 100 / Object.getOwnPropertyNames(text_json).length,
         style;
-    for (i = 0; i < text_json.main_menu.length; i++) {
-        style = (i != text_json.main_menu.length-1) ? 'bord': '';
-        html = html + "<td id='m_" + text_json.main_menu[i] + "' onclick=\"updata_page('" + text_json.main_menu[i] + "')\" align='center' valign='center' width='" + size + "%' class='cursor_link menu_button " + style + "'>" + text_json.main_menu[i].toUpperCase() + "</td>"
+    for (i = 0; i < Object.getOwnPropertyNames(text_json).length; i++) {
+        var t = Object.getOwnPropertyNames(text_json)[i]
+        if (t != "description" && t != "avatar") {
+            style = (i != Object.getOwnPropertyNames(text_json).length - 1) ? 'bord' : '';
+            html = html + "<td id='m_" + t + "' onclick=\"updata_page('" + t + "')\" align='center' valign='center' width='" + size + "%' class='cursor_link menu_button " + style + "'>" + t.toUpperCase() + "</td>"
+        }
     }
     document.getElementById('main_menu').innerHTML = html + "</tr></tbody></table>"
 }
+
 function updata_page(name) {
     var buttons = document.getElementsByClassName('menu_button');
     for (i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("select");
-        if (buttons[i].id == "m_"+name) {buttons[i].classList.add("select");}
+        if (buttons[i].id == "m_" + name) {
+            buttons[i].classList.add("select");
+        }
     }
     window.location.hash = name;
     var html = "";
-    if (text_json[name].tip == "gallery"){
+    if (text_json[name].tip == "gallery") {
         for (i = 0; i < text_json[name].content.length; i++) {
-            if (text_json[name].content[i].title){
+            if (text_json[name].content[i].title) {
                 html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
             } else {
-                html = html + "<div class='gallery'><div " + link(name,i) + " class='" + cursor_link(name,i) + " panel shadow item_gl shadow_select' style=\"background-image: url('" + text_json[name].content[i].icon + "');\" ></div> </div>"
+                html = html + "<div class='gallery'><div " + link(name, i) + " class='" + cursor_link(name, i) + " panel shadow item_gl shadow_select' style=\"background-image: url('" + text_json[name].content[i].icon + "');\" ></div> </div>"
             }
         }
         document.getElementById('Message').innerHTML = html
-    } else  if (text_json[name].tip == "list") {
+    } else if (text_json[name].tip == "list") {
         for (i = 0; i < text_json[name].content.length; i++) {
-            if (text_json[name].content[i].title){
+            if (text_json[name].content[i].title) {
                 html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
             } else {
-            var table = "<div class='" + cursor_link(name,i) + " panel shadow item_ls shadow_select' " + link(name,i) + " ><table width='100%' height='164'><tbody><tr><td width='164' align='center' valign='center' rowspan='2'><img src='" + text_json[name].content[i].icon + "' style='height:128px; width:128px; border-radius: 64px;'></td><td align='left' height='48' valign='center'>" + text_json[name].content[i].name + "</td></tr><tr><td valign='top' align='left'><p>" + text_json[name].content[i].text + "</p></td></tr></tbody></table></div>"
+                var table = "<div class='" + cursor_link(name, i) + " panel shadow item_ls shadow_select' " + link(name, i) + " ><table width='100%' height='164'><tbody><tr><td width='164' align='center' valign='center' rowspan='2'><img src='" + text_json[name].content[i].icon + "' style='height:128px; width:128px; border-radius: 64px;'></td><td align='left' height='48' valign='center'>" + text_json[name].content[i].name + "</td></tr><tr><td valign='top' align='left'><p>" + text_json[name].content[i].text + "</p></td></tr></tbody></table></div>"
                 html = html + table
-                
+
             }
         }
         document.getElementById('Message').innerHTML = html
-    } else  if (text_json[name].tip == "text") {
+    } else if (text_json[name].tip == "text") {
         for (i = 0; i < text_json[name].content.length; i++) {
-            if (text_json[name].content[i].title){
+            if (text_json[name].content[i].title) {
                 html = html + "<div class='clearfix'></div><p align='left'>" + text_json[name].content[i].title + "</p><br>";
             } else {
-                html = html + "<div class='" + cursor_link(name,i) + " panel shadow item_tx shadow_select' " + link(name,i) + ">" + text_json[name].content[i].text + "</div>";
+                html = html + "<div class='" + cursor_link(name, i) + " panel shadow item_tx shadow_select' " + link(name, i) + ">" + text_json[name].content[i].text + "</div>";
             }
         }
         document.getElementById('Message').innerHTML = html
     }
 }
-function link(name,i){
-    if (text_json[name].content[i].url){
+
+function link(name, i) {
+    if (text_json[name].content[i].url) {
         return "onclick=\"window.open('" + text_json[name].content[i].url + "')\"";
-    } else if (text_json[name].content[i].img || text_json[name].content[i].content){
+    } else if (text_json[name].content[i].img || text_json[name].content[i].content) {
         return "onclick=\"modal_window('open'," + i + ")\"";
     }
 }
-function cursor_link(name,i) {
-    if (text_json[name].content[i].img || text_json[name].content[i].content || text_json[name].content[i].url){
-        return "cursor_link";}
+
+function cursor_link(name, i) {
+    if (text_json[name].content[i].img || text_json[name].content[i].content || text_json[name].content[i].url) {
+        return "cursor_link";
+    }
 }
-function modal_window(action,i){
+
+function modal_window(action, i) {
     var window_zone = document.getElementById("window_zone");
-    if (action == 'close'){
+    if (action == 'close') {
         window_zone.style.visibility = "hidden"
         window_zone.style.backgroundColor = 'rgba(0,0,0,0)';
         document.body.style.overflow = 'scroll';
@@ -279,17 +284,17 @@ function modal_window(action,i){
             child = window_zone.lastElementChild;
         }
     } else if (action == 'open') {
-        var name = window.location.hash.replace('#','');
+        var name = window.location.hash.replace('#', '');
         window_zone.style.visibility = "visible";
         window_zone.scrollTo(0, 0);
         window_zone.style.backgroundColor = 'rgba(0,0,0,0.5)';
         document.body.style.overflow = 'hidden';
-        if (text_json[name].content[i].img){
+        if (text_json[name].content[i].img) {
             var img = document.createElement("img");
             img.className = "content shadow panel";
             img.src = text_json[name].content[i].img;
             window_zone.appendChild(img);
-            if (text_json[name].content[i].name){
+            if (text_json[name].content[i].name) {
                 var div = document.createElement("div");
                 div.innerHTML = text_json[name].content[i].name;
                 div.style.color = "#fff";
@@ -297,7 +302,7 @@ function modal_window(action,i){
                 div.style.fontSize = "32px";
                 window_zone.appendChild(div);
             }
-        } else if (text_json[name].content[i].content){
+        } else if (text_json[name].content[i].content) {
             window_zone.innerHTML = "<table style='width: 100vw; height: 100vh;'><tbody><tr><td align='center' valign='center'>" + text_json[name].content[i].content; + "</td></tr></tbody></table>"
         }
     }
